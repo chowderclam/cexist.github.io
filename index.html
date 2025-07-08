@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEXIST | Break The Chains</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'JetBrains Mono', monospace;
+            background: #000000;
+            color: #00ff41;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.4;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -2;
+        }
+
+        @keyframes gridPulse {
+            /* Removed - keeping static terminal look */
+        }
+
+        .circuit-lines {
+            display: none; /* Removing modern circuit effects */
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            height: 2px;
+            animation: circuitFlow 6s linear infinite;
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            border: 2px solid #00ff41;
+            margin: 1rem;
+            background: #000000;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #00ff41;
+            letter-spacing: 0.3em;
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 0px #003300;
+        }
+
+        @keyframes logoShift {
+            /* Removed - keeping static terminal look */
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            opacity: 0.9;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            color: #66ff66;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 85vh;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            color: #00ff41;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            color: #aaffaa;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+            color: #00ff41;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #000000;
+            border: 2px solid #ffaa00;
+            border-radius: 0;
+            color: #ffaa00;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-primary:hover {
+            background: #00ff41;
+            color: #000000;
+            border-color: #00ff41;
+        }
+
+        .btn-secondary:hover {
+            background: #ffaa00;
+            color: #000000;
+            border-color: #ffaa00;
+        }
+
+        .stats-section {
+            margin: 6rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+            padding: 2rem;
+            transition: all 0.1s ease;
+            position: relative;
+            margin: 1rem;
+        }
+
+        .stat-card::before {
+            display: none; /* Remove modern effects */
+        }
+
+        .stat-card:hover::before {
+            display: none;
+        }
+
+        .stat-card:hover {
+            background: #001100;
+            border-color: #00ff41;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00ff41;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .principles {
+            margin: 8rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #00ff41;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .principle-card {
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+            padding: 2rem;
+            transition: all 0.1s ease;
+            position: relative;
+            margin: 1rem;
+        }
+
+        .principle-card:hover {
+            background: #001100;
+            border-color: #00ff41;
+        }
+
+        .principle-icon {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            display: block;
+            color: #ffaa00;
+        }
+
+        .principle-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #00ff41;
+        }
+
+        .principle-description {
+            opacity: 0.85;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .manifesto {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+            text-align: center;
+        }
+
+        .manifesto-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #00ff41;
+        }
+
+        .manifesto-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .join-movement {
+            margin: 4rem 0;
+            text-align: center;
+            padding: 2rem;
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+        }
+
+        .movement-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #00ff41;
+        }
+
+        .movement-description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border: 2px solid #00ff41;
+            background: #000000;
+            margin: 1rem;
+        }
+
+        .footer-content {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            background: #00ff41;
+            width: 3px;
+            height: 1.2em;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .code-block {
+            background: #000000;
+            border: 2px solid #00ff41;
+            border-radius: 0;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            color: #00ff41;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .glitch-effect {
+            /* Removed - keeping static terminal look */
+        }
+
+        @keyframes glitch {
+            /* Removed - keeping static terminal look */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="circuit-lines" id="circuitLines"></div>
+
+    <div class="container">
+        <header>
+            <div class="code-block">
+                <pre>
+╔═══════════════════════════════════════════════════════════════╗
+║  ░█████╗░███████╗██╗░░██╗██╗░██████╗████████╗                ║
+║  ██╔══██╗██╔════╝╚██╗██╔╝██║██╔════╝╚══██╔══╝                ║
+║  ██║░░╚═╝█████╗░░░╚███╔╝░██║╚█████╗░░░░██║░░░                ║
+║  ██║░░██╗██╔══╝░░░██╔██╗░██║░╚═══██╗░░░██║░░░                ║
+║  ╚█████╔╝███████╗██╔╝╚██╗██║██████╔╝░░░██║░░░                ║
+║  ░╚════╝░╚══════╝╚═╝░░╚═╝╚═╝╚═════╝░░░░╚═╝░░░                ║
+╚═══════════════════════════════════════════════════════════════╝
+                </pre>
+            </div>
+            <h1 class="logo">CEXIST</h1>
+            <p class="tagline">RESISTANCE • DECENTRALIZATION • FREEDOM</p>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="code-block">
+                    <pre>
+user@resistance:~$ ./break_chains.sh
+[LOADING] Anti-centralization protocol...
+[SUCCESS] Chains broken
+[SUCCESS] Centralization destroyed
+                    </pre>
+                </div>
+                <h2 class="hero-title">
+                    BREAK THE CHAINS<br>
+                    <span>DESTROY CENTRALIZATION</span>
+                </h2>
+                <p class="hero-subtitle">
+                    No more intermediaries. No more gatekeepers. No more control.<br>
+                    Your keys, your crypto, your freedom.<span class="terminal-cursor"></span>
+                </p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-primary" onclick="launchProtocol()">
+                        [LAUNCH_PROTOCOL]
+                    </a>
+                    <a href="#" class="btn-secondary" onclick="joinResistance()">
+                        [JOIN_RESISTANCE]
+                    </a>
+                </div>
+                <div class="code-block">
+                    <code>
+                        user@resistance:~$ cexist.init()<br>
+                        > Centralised_exchanges.destroy()<br>
+                        > self_custody.enable()<br>
+                        > freedom_protocol.activate()<br>
+                        <span style="color: #00ff41;">SUCCESS: Decentralization achieved</span><br>
+                        user@resistance:~$ █
+                    </code>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">0x00</div>
+                    <div class="stat-label">Central Authority</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Self Custody</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Decentralized Power</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Unstoppable</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="principles">
+            <h3 class="section-title">CORE PROTOCOLS</h3>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <span class="principle-icon">[LOCK]</span>
+                    <h4 class="principle-title">SELF-CUSTODY ONLY</h4>
+                    <p class="principle-description">
+                        Your private keys belong to YOU. No exchange, no custodian, no middleman
+                        ever holds your assets. True ownership through cryptographic sovereignty.
+                    </p>
+                </div>
+                <div class="principle-card">
+                    <span class="principle-icon">[WAR]</span>
+                    <h4 class="principle-title">ANTI-CEX WARFARE</h4>
+                    <p class="principle-description">
+                        Centralized exchanges are the enemy of decentralization. We build tools
+                        and protocols that make CEX obsolete through superior technology.
+                    </p>
+                </div>
+                <div class="principle-card">
+                    <span class="principle-icon">[P2P]</span>
+                    <h4 class="principle-title">PEER-TO-PEER NATIVE</h4>
+                    <p class="principle-description">
+                        Direct transactions between individuals. No KYC, no AML, no government
+                        oversight. Pure cryptographic freedom as Satoshi intended.
+                    </p>
+                </div>
+                <div class="principle-card">
+                    <span class="principle-icon">[SHIELD]</span>
+                    <h4 class="principle-title">CENSORSHIP RESISTANT</h4>
+                    <p class="principle-description">
+                        Unstoppable protocols that cannot be shut down, regulated, or controlled
+                        by any authority. Immutable code is law.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="manifesto">
+            <h3 class="manifesto-title">THE RESISTANCE MANIFESTO</h3>
+            <p class="manifesto-text">
+                We reject the centralized financial system that has enslaved humanity for centuries.
+                Centralized exchanges are just banks in disguise - controlling, surveilling, and
+                profiting from OUR assets. We build the infrastructure for a truly decentralized
+                future where individuals control their own financial destiny.
+            </p>
+            <div class="code-block">
+                <code>
+                    user@resistance:~$ cat manifesto.txt<br>
+                    if (exchange.isCentralized()) {<br>
+                    &nbsp;&nbsp;resistance.engage();<br>
+                    &nbsp;&nbsp;protocol.destroy(exchange);<br>
+                    &nbsp;&nbsp;freedom.restore();<br>
+                    }<br>
+                    user@resistance:~$ █
+                </code>
+            </div>
+        </section>
+
+        <section class="join-movement">
+            <h3 class="movement-title">JOIN THE DIGITAL REVOLUTION</h3>
+            <p class="movement-description">
+                The future of finance is decentralized. The future of freedom is in YOUR hands.
+                Join the resistance against centralized control.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary" onclick="deployResistance()">
+                    [DEPLOY_RESISTANCE]
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 CEXIST PROTOCOL • DECENTRALIZED BY DESIGN • UNSTOPPABLE BY NATURE</p>
+            <div class="code-block" style="margin-top: 1rem; font-size: 0.9rem;">
+                <code>user@resistance:~$ cexist --version<br>CEXIST v2.0.25 "FREEDOM_PROTOCOL"<br>user@resistance:~$ █</code>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated circuit lines - DISABLED for terminal look
+        function createCircuitLines() {
+            // Disabled for authentic terminal aesthetic
+        }
+
+        // Protocol launch effect
+        function launchProtocol() {
+            const effect = document.createElement('div');
+            effect.style.position = 'fixed';
+            effect.style.top = '50%';
+            effect.style.left = '50%';
+            effect.style.transform = 'translate(-50%, -50%)';
+            effect.style.fontSize = '2rem';
+            effect.style.zIndex = '1000';
+            effect.style.pointerEvents = 'none';
+            effect.style.color = '#00ff41';
+            effect.style.fontFamily = 'Courier New, monospace';
+            effect.style.fontWeight = '900';
+            effect.style.background = '#000000';
+            effect.style.border = '2px solid #00ff41';
+            effect.style.padding = '2rem';
+            effect.innerHTML = '[PROTOCOL LAUNCHED]';
+
+            document.body.appendChild(effect);
+
+            setTimeout(() => {
+                if (document.body.contains(effect)) {
+                    document.body.removeChild(effect);
+                }
+            }, 2000);
+        }
+
+        function joinResistance() {
+            const effect = document.createElement('div');
+            effect.style.position = 'fixed';
+            effect.style.top = '50%';
+            effect.style.left = '50%';
+            effect.style.transform = 'translate(-50%, -50%)';
+            effect.style.fontSize = '2rem';
+            effect.style.zIndex = '1000';
+            effect.style.pointerEvents = 'none';
+            effect.style.color = '#ffaa00';
+            effect.style.fontFamily = 'Courier New, monospace';
+            effect.style.fontWeight = '700';
+            effect.style.background = '#000000';
+            effect.style.border = '2px solid #ffaa00';
+            effect.style.padding = '2rem';
+            effect.innerHTML = '[RESISTANCE ACTIVATED]';
+
+            document.body.appendChild(effect);
+
+            setTimeout(() => {
+                if (document.body.contains(effect)) {
+                    document.body.removeChild(effect);
+                }
+            }, 2000);
+        }
+
+        function deployResistance() {
+            const effect = document.createElement('div');
+            effect.style.position = 'fixed';
+            effect.style.top = '50%';
+            effect.style.left = '50%';
+            effect.style.transform = 'translate(-50%, -50%)';
+            effect.style.fontSize = '2rem';
+            effect.style.zIndex = '1000';
+            effect.style.pointerEvents = 'none';
+            effect.style.color = '#00ff41';
+            effect.style.fontFamily = 'Courier New, monospace';
+            effect.style.fontWeight = '900';
+            effect.style.background = '#000000';
+            effect.style.border = '2px solid #00ff41';
+            effect.style.padding = '2rem';
+            effect.innerHTML = '[DEPLOYING RESISTANCE]';
+
+            document.body.appendChild(effect);
+
+            setTimeout(() => {
+                if (document.body.contains(effect)) {
+                    document.body.removeChild(effect);
+                }
+            }, 2000);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple terminal startup message
+            console.log('CEXIST RESISTANCE PROTOCOL LOADED');
+            console.log('Type: help for available commands');
+
+            // Basic hover effects for buttons
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
